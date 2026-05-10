@@ -16,10 +16,22 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Compute base ref (handle initial commits)
+        id: base
+        run: |
+          if [ -n "${{ github.event.pull_request.base.sha }}" ]; then
+            REF=${{ github.event.pull_request.base.sha }}
+          elif [ "${{ github.event.before }}" != "0000000000000000000000000000000000000000" ] && [ -n "${{ github.event.before }}" ]; then
+            REF=${{ github.event.before }}
+          else
+            REF=$(git rev-parse HEAD~1 2>/dev/null || git rev-list --max-parents=0 HEAD)
+          fi
+          echo "ref=$REF" >> "$GITHUB_OUTPUT"
       - name: Run prpack-action against itself
         uses: ./
         with:
-          base: ${{ github.event.pull_request.base.sha || github.event.before || 'HEAD~1' }}
+          base: ${{ steps.base.outputs.ref }}
+          post-summary-comment: 'false'
       - name: Verify output
         run: |
           test -s prpack-context.md
