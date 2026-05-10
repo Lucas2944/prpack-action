@@ -10,9 +10,8 @@ inputs:
     description: 'Base ref to diff against. Defaults to the PR base ref, or origin/main outside of PR events.'
     required: false
   head:
-    description: 'Head ref. Defaults to GITHUB_SHA.'
+    description: 'Head ref. Defaults to the PR head SHA (if in a pull_request event) or github.sha otherwise.'
     required: false
-    default: ${{ github.sha }}
   config:
     description: 'Path to a .prpack.yml config file in your repo.'
     required: false
@@ -58,24 +57,36 @@ outputs:
 runs:
   using: 'composite'
   steps:
-    - name: Resolve base ref
-      id: base
+    - name: Resolve base and head refs
+      id: refs
       shell: bash
       run: |
+        # Base
         if [ -n "${{ inputs.base }}" ]; then
-          echo "ref=${{ inputs.base }}" >> "$GITHUB_OUTPUT"
+          BASE="${{ inputs.base }}"
         elif [ -n "${{ github.event.pull_request.base.sha }}" ]; then
-          echo "ref=${{ github.event.pull_request.base.sha }}" >> "$GITHUB_OUTPUT"
+          BASE="${{ github.event.pull_request.base.sha }}"
         else
-          echo "ref=origin/main" >> "$GITHUB_OUTPUT"
+          BASE="origin/main"
         fi
+        # Head
+        if [ -n "${{ inputs.head }}" ]; then
+          HEAD="${{ inputs.head }}"
+        elif [ -n "${{ github.event.pull_request.head.sha }}" ]; then
+          HEAD="${{ github.event.pull_request.head.sha }}"
+        else
+          HEAD="${{ github.sha }}"
+        fi
+        echo "base=$BASE" >> "$GITHUB_OUTPUT"
+        echo "head=$HEAD" >> "$GITHUB_OUTPUT"
+        echo "base=$BASE  head=$HEAD"
 
     - name: Pack the PR
       id: pack
       shell: bash
       env:
-        BASE: ${{ steps.base.outputs.ref }}
-        HEAD: ${{ inputs.head }}
+        BASE: ${{ steps.refs.outputs.base }}
+        HEAD: ${{ steps.refs.outputs.head }}
         OUT: ${{ inputs.output-path }}
         CONFIG: ${{ inputs.config }}
         INCLUDE_TESTS: ${{ inputs.include-tests }}
