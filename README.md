@@ -1,5 +1,9 @@
 # prpack-action
 
+[![test](https://github.com/Lucas2944/prpack-action/actions/workflows/test.yml/badge.svg)](https://github.com/Lucas2944/prpack-action/actions/workflows/test.yml)
+[![release](https://img.shields.io/github/v/release/Lucas2944/prpack-action)](https://github.com/Lucas2944/prpack-action/releases/latest)
+[![license](https://img.shields.io/github/license/Lucas2944/prpack-action)](./LICENSE)
+
 > Pack each pull request into one markdown file optimized for LLM code review.
 
 A GitHub Action wrapper around [prpack](https://github.com/Lucas2944/prpack). On every PR, it builds a single markdown file containing the diff *and* the full post-change content of every touched file, uploads it as an artifact, and leaves a summary comment. Drop the artifact into Claude / Cursor / your model of choice and ask for a review that can actually see what didn't change.
