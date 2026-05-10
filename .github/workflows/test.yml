@@ -1,0 +1,26 @@
+name: test
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  smoke-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Run prpack-action against itself
+        uses: ./
+        with:
+          base: ${{ github.event.pull_request.base.sha || github.event.before || 'HEAD~1' }}
+      - name: Verify output
+        run: |
+          test -s prpack-context.md
+          head -20 prpack-context.md

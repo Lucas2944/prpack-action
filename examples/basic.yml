@@ -1,0 +1,18 @@
+# Drop this into .github/workflows/prpack.yml in your repo.
+name: prpack
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  pack:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: Lucas2944/prpack-action@v1
