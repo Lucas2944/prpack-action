@@ -13,6 +13,10 @@ A GitHub Action wrapper around [prpack](https://github.com/Lucas2944/prpack). On
 
 The technique behind it is written up at length here: [Your LLM code reviewer is reading half the file](https://scottthurman.hashnode.dev/your-llm-code-reviewer-is-reading-half-the-file).
 
+Reproducible side-by-side proof that this matters: [prpack/examples/invoice-refactor](https://github.com/Lucas2944/prpack/tree/main/examples/invoice-refactor). Paste the raw diff into Claude; paste the packed context into Claude; compare.
+
+Five-minute setup tutorial: [Add an LLM PR reviewer to your GitHub Actions in 5 minutes (no API key)](https://scottthurman.hashnode.dev/).
+
 ## Usage
 
 The minimum:
