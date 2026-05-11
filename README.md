@@ -15,6 +15,8 @@ The technique behind it is written up at length here: [Your LLM code reviewer is
 
 Reproducible side-by-side proof that this matters: [prpack/examples/invoice-refactor](https://github.com/Lucas2944/prpack/tree/main/examples/invoice-refactor). Paste the raw diff into Claude; paste the packed context into Claude; compare.
 
+**prpack v0.2.0** also ships a native `--review [angle]` flag that calls Anthropic and streams the review for you. Currently this action runs in pack-only mode; if you want CI to auto-review, you can extend the workflow to set `ANTHROPIC_API_KEY` and call `npx -y github:Lucas2944/prpack --review security --yes` directly in a subsequent step. See [prpack v0.2.0 release](https://github.com/Lucas2944/prpack/releases/tag/v0.2.0).
+
 Five-minute setup tutorial: [Add an LLM PR reviewer to your GitHub Actions in 5 minutes (no API key)](https://scottthurman.hashnode.dev/).
 
 ## Usage
