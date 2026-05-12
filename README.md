@@ -2,6 +2,7 @@
 
 [![test](https://github.com/Lucas2944/prpack-action/actions/workflows/test.yml/badge.svg)](https://github.com/Lucas2944/prpack-action/actions/workflows/test.yml)
 [![release](https://img.shields.io/github/v/release/Lucas2944/prpack-action)](https://github.com/Lucas2944/prpack-action/releases/latest)
+[![Marketplace](https://img.shields.io/badge/Marketplace-prpack-purple?logo=github)](https://github.com/marketplace/actions/prpack)
 [![license](https://img.shields.io/github/license/Lucas2944/prpack-action)](./LICENSE)
 [![demo](https://img.shields.io/badge/try%20in%20browser-lucas2944.github.io%2Fprpack--demo-d2a8ff)](https://lucas2944.github.io/prpack-demo/)
 
